@@ -50,7 +50,9 @@ eleventyComputed:
           {% assign hasPages = false %}
           {% assign hasInessential = false %}
           {% if ep.pages != empty %}{% assign hasPages = true %}{% endif %}
-          {% if ep.inessentialPages and ep.inessentialPages != empty %}{% assign hasInessential = true %}{% endif %}
+          {% if ep.inessentialPages and ep.inessentialPages != empty -%}
+            {%- assign hasInessential = true -%}
+          {%- endif %}
           {% if hasPages %}
             {% assign pLast = ep.pages | last %}
             {% assign pLastRange = pLast.ranges | last %}
