@@ -21,6 +21,9 @@ eleventyComputed:
   .
 </p>
 
+<input type="checkbox" id="include-inessential">
+<label for="include-inessential">Include inessential pages in Last Page</label>
+
 <table>
   <thead>
     <tr>
@@ -33,13 +36,45 @@ eleventyComputed:
     {% for ep in s.episodes %}
       <tr>
         <td>{{ ep.number }}</td>
-        <td>
+        <td class="last-page-default">
           {% if ep.pages == empty %}
             -
           {% else %}
             {% assign lastEntry = ep.pages | last -%}
-            {%- assign lastRange = lastEntry.ranges | last %}v{{ lastEntry.volume }} p
+            {%- assign lastRange = lastEntry.ranges | last %}
+            v{{ lastEntry.volume }} p
             {{- lastRange | last }}
+          {% endif %}
+        </td>
+        <td class="last-page-inessential">
+          {% assign hasPages = false %}
+          {% assign hasInessential = false %}
+          {% if ep.pages != empty %}{% assign hasPages = true %}{% endif %}
+          {% if ep.inessentialPages and ep.inessentialPages != empty %}{% assign hasInessential = true %}{% endif %}
+          {% if hasPages %}
+            {% assign pLast = ep.pages | last %}
+            {% assign pLastRange = pLast.ranges | last %}
+            {% assign pLastPage = pLastRange | last %}
+            {% assign pLastVol = pLast.volume %}
+          {% endif %}
+          {% if hasInessential %}
+            {% assign iLast = ep.inessentialPages | last %}
+            {% assign iLastRange = iLast.ranges | last %}
+            {% assign iLastPage = iLastRange | last %}
+            {% assign iLastVol = iLast.volume %}
+          {% endif %}
+          {% if hasPages and hasInessential %}
+            {% if iLastVol > pLastVol or iLastVol == pLastVol and iLastPage > pLastPage %}
+              v{{ iLastVol }} p{{ iLastPage }}
+            {% else %}
+              v{{ pLastVol }} p{{ pLastPage }}
+            {% endif %}
+          {% elsif hasInessential %}
+            v{{ iLastVol }} p{{ iLastPage }}
+          {% elsif hasPages %}
+            v{{ pLastVol }} p{{ pLastPage }}
+          {% else %}
+            -
           {% endif %}
         </td>
         <td>

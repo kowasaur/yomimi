@@ -1,0 +1,3 @@
+.last-page-inessential { display: none; }
+#include-inessential:checked ~ table .last-page-default { display: none; }
+#include-inessential:checked ~ table .last-page-inessential { display: table-cell; }
