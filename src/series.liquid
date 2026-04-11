@@ -21,8 +21,40 @@ eleventyComputed:
   .
 </p>
 
-<input type="checkbox" id="include-inessential">
-<label for="include-inessential">Include inessential pages in Last Page</label>
+<input type="checkbox" id="include-inessential" oninput="calculateEpisode(); calculatePage()">
+<label for="include-inessential">
+  Include inessential pages in calcuations (affects Last Page and below calculators)
+</label>
+
+<label for="episode-calc-volume">Volume</label>
+<input
+  type="number"
+  placeholder="1"
+  step="1"
+  id="episode-calc-volume"
+  oninput="calculateEpisode()"
+>
+<label for="episode-calc-page">Page</label>
+<input
+  type="number"
+  placeholder="1"
+  step="1"
+  id="episode-calc-page"
+  oninput="calculateEpisode()"
+>
+<label for="episode-calc-result">Episode you can watch up to</label>
+<output id="episode-calc-result" for="episode-calc-volume episode-calc-page"></output>
+
+<label for="page-calc-episode">Episode</label>
+<input
+  type="number"
+  placeholder="1"
+  step="1"
+  id="page-calc-episode"
+  oninput="calculatePage()"
+>
+<label for="page-calc-result">Page you have to read up to watch up to this episode</label>
+<output id="page-calc-result" for="page-calc-episode"></output>
 
 <table>
   <thead>
@@ -108,3 +140,93 @@ eleventyComputed:
     {% endfor %}
   </tbody>
 </table>
+
+<script>
+  const episodes = {{ s.episodes | jsonify }};
+  const lastPages = makeMonotoneIncreasing(episodes.map(ep => {
+    if (!ep.pages || ep.pages.length == 0) {
+      return {"volume": 0, "page": 0};
+    }
+    const lastVolPage = ep.pages.at(-1);
+    return {
+      "volume": lastVolPage.volume,
+      "page": lastVolPage.ranges.at(-1).at(-1)
+    };
+  }));
+  const lastAllPages = makeMonotoneIncreasing(episodes.map((ep, i) => {
+    const lastVolInPage = ep.inessentialPages?.at(-1);
+    const main = lastPages[i];
+    if (!lastVolInPage) {
+      return main;
+    }
+    const inessential = {
+      "volume": lastVolInPage.volume,
+      "page": lastVolInPage.ranges.at(-1).at(-1)
+    };
+    return maxVolPage(main, inessential);
+  }));
+
+  const includeInessentialCheckbox = document.getElementById("include-inessential");
+
+  function volGreater(a, b) {
+    return a.volume > b.volume || (a.volume == b.volume && a.page > b.page);
+  }
+
+  function maxVolPage(a, b) {
+    return volGreater(a, b) ? a : b;
+  }
+
+  function makeMonotoneIncreasing(arr) {
+    for (let i = 1; i < arr.length; i++) {
+      arr[i] = maxVolPage(arr[i], arr[i - 1]);
+    }
+    return arr;
+  }
+
+  function getLastPage(episodeIndex) {
+    return includeInessentialCheckbox.checked ? lastAllPages[episodeIndex] : lastPages[episodeIndex];
+  }
+
+  function invalidNumber(n) {
+    return isNaN(n) || n < 1 || !Number.isInteger(n);
+  }
+
+  function calculateEpisode() {
+    const volumeInput = document.getElementById("episode-calc-volume");
+    const pageInput = document.getElementById("episode-calc-page");
+    const resultOutput = document.getElementById("episode-calc-result");
+    const volume = volumeInput.valueAsNumber;
+    const page = pageInput.valueAsNumber;
+
+    if (invalidNumber(volume) || invalidNumber(page)) {
+      resultOutput.value = "";
+      return;
+    }
+
+    for (let i = 0; i < episodes.length; i++) {
+      const lastPage = getLastPage(i);
+      if (volGreater(lastPage, {"volume": volume, "page": page})) {
+        resultOutput.value = episodes[i].number - 1;
+        if (resultOutput.value == 0) {
+          resultOutput.value = "None";
+        }
+        return;
+      }
+    }
+    resultOutput.value = episodes.length;
+  }
+
+  function calculatePage() {
+    const episodeInput = document.getElementById("page-calc-episode");
+    const resultOutput = document.getElementById("page-calc-result");
+    const episode = episodeInput.valueAsNumber;
+
+    if (invalidNumber(episode) || episode > episodes.length) {
+      resultOutput.value = "";
+      return;
+    }
+
+    const page = getLastPage(episode - 1);
+    resultOutput.value = `Volume ${page.volume} Page ${page.page}`;
+  }
+</script>
