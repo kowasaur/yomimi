@@ -10,131 +10,158 @@
   "episodes": [
     {
       "number": 1,
-      "pages": [{ "volume": 1, "range": [14, 35] }],
-      "inessentialPages": [{ "volume": 1, "range": [41, 43] }]
+      "pages": [{ "volume": 1, "ranges": [[14, 35]] }],
+      "inessentialPages": [{ "volume": 1, "ranges": [[41, 43]] }]
     },
     {
       "number": 2,
       "pages": [
-        { "volume": 1, "range": [5, 13] },
-        { "volume": 1, "range": [36, 55] }
+        {
+          "volume": 1,
+          "ranges": [
+            [5, 13],
+            [36, 55]
+          ]
+        }
       ]
     },
     {
       "number": 3,
-      "pages": [{ "volume": 1, "range": [56, 69] }]
+      "pages": [{ "volume": 1, "ranges": [[56, 69]] }]
     },
     {
       "number": 4,
-      "pages": [{ "volume": 1, "range": [70, 83] }],
-      "inessentialPages": [
-        { "volume": 1, "range": [96, 96] },
-        { "volume": 1, "range": [152, 152] }
-      ]
+      "pages": [{ "volume": 1, "ranges": [[70, 83]] }],
+      "inessentialPages": [{ "volume": 1, "ranges": [[96], [152]] }]
     },
     {
       "number": 5,
-      "pages": [
-        { "volume": 1, "range": [83, 96] },
-        { "volume": 1, "range": [153, 153] },
-        { "volume": 1, "range": [156, 159] }
-      ]
+      "pages": [{ "volume": 1, "ranges": [[83, 96], [153], [156, 159]] }]
     },
     {
       "number": 6,
       "pages": [
-        { "volume": 1, "range": [97, 101] },
-        { "volume": 1, "range": [104, 107] }
+        {
+          "volume": 1,
+          "ranges": [
+            [97, 101],
+            [104, 107]
+          ]
+        }
       ],
-      "inessentialPages": [{ "volume": 1, "range": [151, 151] }]
+      "inessentialPages": [{ "volume": 1, "ranges": [[151]] }]
     },
     {
       "number": 7,
       "pages": [
-        { "volume": 1, "range": [107, 115] },
-        { "volume": 1, "range": [118, 120] },
-        { "volume": 1, "range": [154, 155] }
+        {
+          "volume": 1,
+          "ranges": [
+            [107, 115],
+            [118, 120],
+            [154, 155]
+          ]
+        }
       ]
     },
     {
       "number": 8,
-      "pages": [{ "volume": 1, "range": [121, 136] }]
+      "pages": [{ "volume": 1, "ranges": [[121, 136]] }]
     },
     {
       "number": 9,
       "pages": [
-        { "volume": 1, "range": [137, 138] },
-        { "volume": 1, "range": [140, 149] }
+        {
+          "volume": 1,
+          "ranges": [
+            [137, 138],
+            [140, 149]
+          ]
+        }
       ],
-      "inessentialPages": [{ "volume": 1, "range": [210, 212] }]
+      "inessentialPages": [{ "volume": 1, "ranges": [[210, 212]] }]
     },
     {
       "number": 10,
-      "pages": [{ "volume": 1, "range": [160, 168] }]
+      "pages": [{ "volume": 1, "ranges": [[160, 168]] }]
     },
     {
       "number": 11,
-      "pages": [{ "volume": 1, "range": [169, 178] }]
+      "pages": [{ "volume": 1, "ranges": [[169, 178]] }]
     },
     {
       "number": 12,
-      "pages": [{ "volume": 1, "range": [178, 195] }]
+      "pages": [{ "volume": 1, "ranges": [[178, 195]] }]
     },
     {
       "number": 13,
-      "pages": [
-        { "volume": 1, "range": [195, 199] },
-        { "volume": 1, "range": [205, 205] },
-        { "volume": 1, "range": [213, 216] }
-      ],
-      "inessentialPages": [{ "volume": 1, "range": [203, 203] }]
+      "pages": [{ "volume": 1, "ranges": [[195, 199], [205], [213, 216]] }],
+      "inessentialPages": [{ "volume": 1, "ranges": [[203]] }]
     },
     {
       "number": 14,
       "pages": [
-        { "volume": 1, "range": [213, 221] },
-        { "volume": 1, "range": [224, 225] }
+        {
+          "volume": 1,
+          "ranges": [
+            [213, 221],
+            [224, 225]
+          ]
+        }
       ],
-      "inessentialPages": [{ "volume": 2, "range": [97, 97] }]
+      "inessentialPages": [{ "volume": 2, "ranges": [[97]] }]
     },
     {
       "number": 15,
       "pages": [
-        { "volume": 2, "range": [4, 7] },
-        { "volume": 2, "range": [41, 42] }
+        {
+          "volume": 2,
+          "ranges": [
+            [4, 7],
+            [41, 42]
+          ]
+        }
       ]
     },
     {
       "number": 16,
-      "pages": [{ "volume": 2, "range": [9, 23] }]
+      "pages": [{ "volume": 2, "ranges": [[9, 23]] }]
     },
     {
       "number": 17,
-      "pages": [
-        { "volume": 2, "range": [8, 8] },
-        { "volume": 2, "range": [24, 30] }
-      ]
+      "pages": [{ "volume": 2, "ranges": [[8], [24, 30]] }]
     },
     {
       "number": 18,
-      "pages": [{ "volume": 2, "range": [42, 62] }]
+      "pages": [{ "volume": 2, "ranges": [[42, 62]] }]
     },
     {
       "number": 19,
       "pages": [
-        { "volume": 2, "range": [38, 39] },
-        { "volume": 2, "range": [63, 67] }
+        {
+          "volume": 2,
+          "ranges": [
+            [38, 39],
+            [63, 67]
+          ]
+        }
       ],
-      "inessentialPages": [{ "volume": 2, "range": [156, 156] }]
+      "inessentialPages": [{ "volume": 2, "ranges": [[156]] }]
     },
     {
       "number": 20,
-      "pages": [{ "volume": 2, "range": [68, 69] }]
+      "pages": [{ "volume": 2, "ranges": [[68, 69]] }]
     },
     {
       "number": 21,
-      "pages": [{ "volume": 2, "range": [70, 75] }]
+      "pages": [{ "volume": 2, "ranges": [[70, 75]] }]
     },
-    { "number": 22, "pages": [] }
+    { "number": 22, "pages": [] },
+    {
+      "number": 23,
+      "pages": [],
+      "inessentialPages": [{ "volume": 2, "ranges": [[163]] }]
+    },
+    { "number": 24, "pages": [] }
   ]
 }
