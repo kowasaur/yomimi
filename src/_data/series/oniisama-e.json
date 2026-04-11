@@ -1,0 +1,17 @@
+{
+  "title": "おにいさまへ…",
+  "titleEnglish": "Dear Brother",
+  "slug": "oniisama-e",
+  "thumbnail": "https://m.media-amazon.com/images/I/714V3gB6HLL._SY425_.jpg",
+  "volumes": [
+    { "number": 1, "ISBN13": "9784122040335" },
+    { "number": 2, "ISBN13": "9784122040489" }
+  ],
+  "episodes": [
+    {
+      "number": 1,
+      "pages": [{ "volume": 1, "range": [14, 35] }],
+      "inessentialPages": [{ "volume": 1, "range": [41, 43] }]
+    }
+  ]
+}
