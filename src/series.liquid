@@ -21,12 +21,12 @@ eleventyComputed:
   .
 </p>
 
-<h2>Episodes</h2>
 <table>
   <thead>
     <tr>
       <th>Episode</th>
       <th>Last Page</th>
+      <th>Pages</th>
     </tr>
   </thead>
   <tbody>
@@ -34,7 +34,29 @@ eleventyComputed:
       <tr>
         <td>{{ ep.number }}</td>
         <td>
-          {% assign lastPage = ep.pages | last %}v{{ lastPage.volume }} p{{ lastPage.range | last }}
+          {% if ep.pages == empty %}
+            -
+          {% else %}
+            {% assign lastPage = ep.pages | last %}v{{ lastPage.volume }} p
+            {{- lastPage.range | last }}
+          {% endif %}
+        </td>
+        <td>
+          {% if ep.pages != empty %}
+            Main pages:
+            {% for p in ep.pages %}
+              v{{ p.volume }} p{{ p.range | join: '-' }}
+              {% unless forloop.last %},{% endunless %}
+            {% endfor -%}
+          {% endif -%}
+          {% if ep.inessentialPages and ep.inessentialPages != empty %}
+            {% if ep.pages != empty %}<br>{% endif %}
+            Inessential pages:
+            {% for p in ep.inessentialPages %}
+              v{{ p.volume }} p{{ p.range | join: '-' }}
+              {% unless forloop.last %},{% endunless %}
+            {% endfor -%}
+          {% endif -%}
         </td>
       </tr>
     {% endfor %}
