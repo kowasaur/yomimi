@@ -5,10 +5,11 @@ title: Yomimi
 <h1>Yomimi</h1>
 <p>Read the source and then watch the adaptation.</p>
 <p>See what pages or chapters each episode of the below shows were adapted from.</p>
-<ul>
+<div>
   {% for s in series %}
-    <li>
-      <a href="/series/{{ s[1].slug }}/">{{- s[1].title -}}</a>
-    </li>
+    <a href="/series/{{ s[1].slug }}/">
+      <img src="{{ s[1].thumbnail }}" alt="{{ s[1].title }} cover">
+      {{- s[1].title -}}
+    </a>
   {% endfor %}
-</ul>
+</div>
