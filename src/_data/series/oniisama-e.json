@@ -3,6 +3,11 @@
   "titleEnglish": "Dear Brother",
   "slug": "oniisama-e",
   "thumbnail": "https://m.media-amazon.com/images/I/714V3gB6HLL._SY425_.jpg",
+  "source": {
+    "name": "kowasaur",
+    "url": "https://github.com/kowasaur",
+    "note": "I've probably made some mistakes, so please let me know if you find any."
+  },
   "volumes": [
     { "number": 1, "ISBN13": "9784122040335" },
     { "number": 2, "ISBN13": "9784122040489" }
