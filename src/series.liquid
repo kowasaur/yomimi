@@ -11,7 +11,7 @@ eleventyComputed:
 ---
 <h1>{{ s.title }}</h1>
 <h2>{{ s.titleEnglish }}</h2>
-<img src="{{ s.thumbnail }}" alt="Thumbnail for {{ s.title }}">
+<img class="cover" src="{{ s.thumbnail }}" alt="Thumbnail for {{ s.title }}">
 <p>
   The page and volume numbers are for the following ISBN13s:
   {% for s in s.volumes %}
@@ -20,125 +20,148 @@ eleventyComputed:
   .
 </p>
 
-<input type="checkbox" id="include-inessential" oninput="calculateEpisode(); calculatePage()">
-<label for="include-inessential">
-  Include inessential pages in calcuations (affects Last Page and below calculators)
-</label>
+<fieldset>
+  <legend>Display options</legend>
+  <div>
+    <label>
+      <input type="checkbox" id="include-inessential" oninput="calculateEpisode(); calculatePage()">
+      Include inessential pages in calculations (affects Last Page column and calculators)
+    </label>
+  </div>
+</fieldset>
 
-<label for="episode-calc-volume">Volume</label>
-<input
-  type="number"
-  placeholder="1"
-  step="1"
-  id="episode-calc-volume"
-  oninput="calculateEpisode()"
->
-<label for="episode-calc-page">Page</label>
-<input
-  type="number"
-  placeholder="1"
-  step="1"
-  id="episode-calc-page"
-  oninput="calculateEpisode()"
->
-<label for="episode-calc-result">Episode you can watch up to</label>
-<output id="episode-calc-result" for="episode-calc-volume episode-calc-page"></output>
+<fieldset>
+  <legend>Find the episode for a page</legend>
+  <div>
+    <label for="episode-calc-volume">Volume</label>
+    <input
+      type="number"
+      placeholder="1"
+      step="1"
+      id="episode-calc-volume"
+      oninput="calculateEpisode()"
+    >
+  </div>
+  <div>
+    <label for="episode-calc-page">Page</label>
+    <input
+      type="number"
+      placeholder="1"
+      step="1"
+      id="episode-calc-page"
+      oninput="calculateEpisode()"
+    >
+  </div>
+  <div>
+    <label for="episode-calc-result">Episode you can watch up to</label>
+    <output id="episode-calc-result" for="episode-calc-volume episode-calc-page"></output>
+  </div>
+</fieldset>
 
-<label for="page-calc-episode">Episode</label>
-<input
-  type="number"
-  placeholder="1"
-  step="1"
-  id="page-calc-episode"
-  oninput="calculatePage()"
->
-<label for="page-calc-result">Page you have to read up to watch up to this episode</label>
-<output id="page-calc-result" for="page-calc-episode"></output>
+<fieldset>
+  <legend>Find the page for an episode</legend>
+  <div>
+    <label for="page-calc-episode">Episode</label>
+    <input
+      type="number"
+      placeholder="1"
+      step="1"
+      id="page-calc-episode"
+      oninput="calculatePage()"
+    >
+  </div>
+  <div>
+    <label for="page-calc-result">Page you have to read up to</label>
+    <output id="page-calc-result" for="page-calc-episode"></output>
+  </div>
+</fieldset>
 
-<table>
-  <thead>
-    <tr>
-      <th>Episode</th>
-      <th>Last Page</th>
-      <th>Pages</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for ep in s.episodes %}
+<div class="table-wrap">
+  <table>
+    <thead>
       <tr>
-        <td>{{ ep.number }}</td>
-        <td class="last-page-default">
-          {% if ep.pages == empty %}
-            -
-          {% else %}
-            {% assign lastEntry = ep.pages | last -%}
-            {%- assign lastRange = lastEntry.ranges | last %}
-            v{{ lastEntry.volume }} p
-            {{- lastRange | last }}
-          {% endif %}
-        </td>
-        <td class="last-page-inessential">
-          {% assign hasPages = false %}
-          {% assign hasInessential = false %}
-          {% if ep.pages != empty %}{% assign hasPages = true %}{% endif %}
-          {% if ep.inessentialPages and ep.inessentialPages != empty -%}
-            {%- assign hasInessential = true -%}
-          {%- endif %}
-          {% if hasPages %}
-            {% assign pLast = ep.pages | last %}
-            {% assign pLastRange = pLast.ranges | last %}
-            {% assign pLastPage = pLastRange | last %}
-            {% assign pLastVol = pLast.volume %}
-          {% endif %}
-          {% if hasInessential %}
-            {% assign iLast = ep.inessentialPages | last %}
-            {% assign iLastRange = iLast.ranges | last %}
-            {% assign iLastPage = iLastRange | last %}
-            {% assign iLastVol = iLast.volume %}
-          {% endif %}
-          {% if hasPages and hasInessential %}
-            {% if iLastVol > pLastVol or iLastVol == pLastVol and iLastPage > pLastPage %}
-              v{{ iLastVol }} p{{ iLastPage }}
-            {% else %}
-              v{{ pLastVol }} p{{ pLastPage }}
-            {% endif %}
-          {% elsif hasInessential %}
-            v{{ iLastVol }} p{{ iLastPage }}
-          {% elsif hasPages %}
-            v{{ pLastVol }} p{{ pLastPage }}
-          {% else %}
-            -
-          {% endif %}
-        </td>
-        <td>
-          {% if ep.pages != empty %}
-            Main pages:
-            {% for p in ep.pages %}
-              {%- unless forloop.first %}, {% endunless -%}
-              Vol. {{ p.volume }}
-              {% for r in p.ranges %}
-                p{{ r | join: '-' }}
-                {%- unless forloop.last %},{%- endunless %}
-              {% endfor %}
-            {% endfor -%}
-          {% endif -%}
-          {% if ep.inessentialPages and ep.inessentialPages != empty %}
-            {% if ep.pages != empty %}<br>{% endif %}
-            Inessential pages:
-            {% for p in ep.inessentialPages %}
-              {%- unless forloop.first %}, {% endunless -%}
-              Vol. {{ p.volume }}
-              {% for r in p.ranges %}
-                p{{ r | join: '-' }}
-                {%- unless forloop.last %},{%- endunless %}
-              {% endfor %}
-            {% endfor -%}
-          {% endif -%}
-        </td>
+        <th>Episode</th>
+        <th>Last Page</th>
+        <th>Pages</th>
       </tr>
-    {% endfor %}
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      {% for ep in s.episodes %}
+        <tr>
+          <td>{{ ep.number }}</td>
+          <td class="last-page-default">
+            {% if ep.pages == empty %}
+              -
+            {% else %}
+              {% assign lastEntry = ep.pages | last -%}
+              {%- assign lastRange = lastEntry.ranges | last %}
+              v{{ lastEntry.volume }} p
+              {{- lastRange | last }}
+            {% endif %}
+          </td>
+          <td class="last-page-inessential">
+            {% assign hasPages = false %}
+            {% assign hasInessential = false %}
+            {% if ep.pages != empty %}{% assign hasPages = true %}{% endif %}
+            {% if ep.inessentialPages and ep.inessentialPages != empty -%}
+              {%- assign hasInessential = true -%}
+            {%- endif %}
+            {% if hasPages %}
+              {% assign pLast = ep.pages | last %}
+              {% assign pLastRange = pLast.ranges | last %}
+              {% assign pLastPage = pLastRange | last %}
+              {% assign pLastVol = pLast.volume %}
+            {% endif %}
+            {% if hasInessential %}
+              {% assign iLast = ep.inessentialPages | last %}
+              {% assign iLastRange = iLast.ranges | last %}
+              {% assign iLastPage = iLastRange | last %}
+              {% assign iLastVol = iLast.volume %}
+            {% endif %}
+            {% if hasPages and hasInessential %}
+              {% if iLastVol > pLastVol or iLastVol == pLastVol and iLastPage > pLastPage %}
+                v{{ iLastVol }} p{{ iLastPage }}
+              {% else %}
+                v{{ pLastVol }} p{{ pLastPage }}
+              {% endif %}
+            {% elsif hasInessential %}
+              v{{ iLastVol }} p{{ iLastPage }}
+            {% elsif hasPages %}
+              v{{ pLastVol }} p{{ pLastPage }}
+            {% else %}
+              -
+            {% endif %}
+          </td>
+          <td>
+            {% if ep.pages != empty %}
+              Main pages:
+              {% for p in ep.pages %}
+                {%- unless forloop.first %}, {% endunless -%}
+                Vol. {{ p.volume }}
+                {% for r in p.ranges %}
+                  p{{ r | join: '-' }}
+                  {%- unless forloop.last %},{%- endunless %}
+                {% endfor %}
+              {% endfor -%}
+            {% endif -%}
+            {% if ep.inessentialPages and ep.inessentialPages != empty %}
+              {% if ep.pages != empty %}<br>{% endif %}
+              Inessential pages:
+              {% for p in ep.inessentialPages %}
+                {%- unless forloop.first %}, {% endunless -%}
+                Vol. {{ p.volume }}
+                {% for r in p.ranges %}
+                  p{{ r | join: '-' }}
+                  {%- unless forloop.last %},{%- endunless %}
+                {% endfor %}
+              {% endfor -%}
+            {% endif -%}
+          </td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
 
 <p>
   The above data is from
