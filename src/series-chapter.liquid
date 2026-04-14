@@ -29,11 +29,30 @@ eleventyComputed:
   </div>
 </fieldset>
 
+<fieldset>
+  <legend>Find the chapter for an episode</legend>
+  <div>
+    <label for="chapter-calc-episode">Episode</label>
+    <input
+      type="number"
+      placeholder="1"
+      step="1"
+      id="chapter-calc-episode"
+      oninput="calculateChapter()"
+    >
+  </div>
+  <div>
+    <label for="chapter-calc-result">Chapter you have to read up to</label>
+    <output id="chapter-calc-result" for="chapter-calc-episode"></output>
+  </div>
+</fieldset>
+
 <div class="table-wrap">
   <table>
     <thead>
       <tr>
         <th>Episode</th>
+        <th>Last Chapter</th>
         <th>Chapters</th>
       </tr>
     </thead>
@@ -41,6 +60,13 @@ eleventyComputed:
       {% for ep in s.episodes %}
         <tr>
           <td>{{ ep.number }}</td>
+          <td>
+            {% if ep.chapters == empty %}
+              -
+            {% else %}
+              {{ ep.chapters | last }}
+            {% endif %}
+          </td>
           <td>{{ ep.chapters | join: ', ' | default: '-' }}</td>
         </tr>
       {% endfor %}
@@ -90,5 +116,18 @@ eleventyComputed:
       }
     }
     resultOutput.value = episodes.length;
+  }
+
+  function calculateChapter() {
+    const episodeInput = document.getElementById("chapter-calc-episode");
+    const resultOutput = document.getElementById("chapter-calc-result");
+    const episode = episodeInput.valueAsNumber;
+
+    if (invalidNumber(episode) || episode > episodes.length) {
+      resultOutput.value = "";
+      return;
+    }
+
+    resultOutput.value = lastChapters[episode - 1];
   }
 </script>
