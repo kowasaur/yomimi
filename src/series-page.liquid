@@ -1,7 +1,7 @@
 ---
 layout: base.liquid
 pagination:
-  data: series
+  data: seriesPage
   size: 1
   alias: s
   resolve: values
@@ -9,9 +9,7 @@ permalink: "/series/{{ s.slug }}/"
 eleventyComputed:
   title: "{{ s.title }} | Yomimi"
 ---
-<h1>{{ s.title }}</h1>
-<h2>{{ s.titleEnglish }}</h2>
-<img class="cover" src="{{ s.thumbnail }}" alt="Thumbnail for {{ s.title }}">
+{% include "series-header.liquid" %}
 <p>
   The page and volume numbers are for the following ISBN13s:
   {% for s in s.volumes %}
@@ -163,10 +161,7 @@ eleventyComputed:
   </table>
 </div>
 
-<p>
-  The above data is from
-  <a href="{{ s.source.url }}" target="_blank">{{ s.source.name }}</a>. "{{ s.source.note }}"
-</p>
+{% include "series-footer.liquid" %}
 
 <script>
   const episodes = {{ s.episodes | jsonify }};

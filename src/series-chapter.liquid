@@ -1,0 +1,94 @@
+---
+layout: base.liquid
+pagination:
+  data: seriesChapter
+  size: 1
+  alias: s
+  resolve: values
+permalink: "/series/{{ s.slug }}/"
+eleventyComputed:
+  title: "{{ s.title }} | Yomimi"
+---
+{% include 'series-header.liquid' %}
+
+<fieldset>
+  <legend>Find the episode for a chapter</legend>
+  <div>
+    <label for="episode-calc-chapter">Chapter</label>
+    <input
+      type="number"
+      placeholder="1"
+      step="1"
+      id="episode-calc-chapter"
+      oninput="calculateEpisode()"
+    >
+  </div>
+  <div>
+    <label for="episode-calc-result">Episode you can watch up to</label>
+    <output id="episode-calc-result" for="episode-calc-chapter"></output>
+  </div>
+</fieldset>
+
+<div class="table-wrap">
+  <table>
+    <thead>
+      <tr>
+        <th>Episode</th>
+        <th>Chapters</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for ep in s.episodes %}
+        <tr>
+          <td>{{ ep.number }}</td>
+          <td>{{ ep.chapters | join: ', ' | default: '-' }}</td>
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+
+{% include 'series-footer.liquid' %}
+
+<script>
+  const episodes = {{ s.episodes | jsonify }};
+  const lastChapters = makeMonotoneIncreasing(episodes.map(ep => {
+    if (!ep.chapters || ep.chapters.length == 0) {
+      return 0;
+    }
+    return Math.max(...ep.chapters);
+  }));
+
+  function makeMonotoneIncreasing(arr) {
+    for (let i = 1; i < arr.length; i++) {
+      arr[i] = Math.max(arr[i], arr[i - 1]);
+    }
+    return arr;
+  }
+
+  function invalidNumber(n) {
+    return isNaN(n) || n < 1 || !Number.isInteger(n);
+  }
+
+  function calculateEpisode() {
+    const chapterInput = document.getElementById("episode-calc-chapter");
+    const resultOutput = document.getElementById("episode-calc-result");
+    const chapter = chapterInput.valueAsNumber;
+
+    if (invalidNumber(chapter)) {
+      resultOutput.value = "";
+      return;
+    }
+
+    for (let i = 0; i < episodes.length; i++) {
+      if (lastChapters[i] > chapter) {
+        resultOutput.value = episodes[i].number - 1;
+        if (resultOutput.value == 0) {
+          resultOutput.value = "None";
+        }
+        return;
+      }
+    }
+    resultOutput.value = episodes.length;
+  }
+</script>

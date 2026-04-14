@@ -1,0 +1,7 @@
+<h1>{{ s.title }}</h1>
+{% if s.titleEnglish %}
+  <h2>{{ s.titleEnglish }}</h2>
+{% endif %}
+{% if s.thumbnail -%}
+  <img class="cover" src="{{ s.thumbnail }}" alt="Thumbnail for {{ s.title }}">
+{%- endif %}
