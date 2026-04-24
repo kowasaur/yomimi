@@ -167,6 +167,102 @@
       "pages": [],
       "inessentialPages": [{ "volume": 2, "ranges": [[163]] }]
     },
-    { "number": 24, "pages": [] }
+    { "number": 24, "pages": [] },
+    {
+      "number": 25,
+      "pages": [
+        {
+          "volume": 2,
+          "ranges": [
+            [76, 83],
+            [156, 159]
+          ]
+        }
+      ]
+    },
+    {
+      "number": 26,
+      "pages": [
+        {
+          "volume": 2,
+          "ranges": [
+            [84, 85],
+            [98, 99],
+            [109, 110],
+            [162, 163]
+          ]
+        }
+      ]
+    },
+    {
+      "number": 27,
+      "pages": [{ "volume": 2, "ranges": [[110, 119]] }]
+    },
+    {
+      "number": 28,
+      "pages": [{ "volume": 2, "ranges": [[120, 123]] }]
+    },
+    {
+      "number": 29,
+      "pages": [{ "volume": 2, "ranges": [[123, 131]] }]
+    },
+    {
+      "number": 30,
+      "pages": [{ "volume": 2, "ranges": [[131, 133]] }]
+    },
+    {
+      "number": 31,
+      "pages": [{ "volume": 2, "ranges": [[134]] }]
+    },
+    {
+      "number": 32,
+      "pages": [{ "volume": 2, "ranges": [[136, 138]] }]
+    },
+    {
+      "number": 33,
+      "pages": [
+        {
+          "volume": 2,
+          "ranges": [
+            [147, 153],
+            [159, 169]
+          ]
+        }
+      ]
+    },
+    {
+      "number": 34,
+      "pages": [{ "volume": 2, "ranges": [[164, 178]] }]
+    },
+    {
+      "number": 35,
+      "pages": [{ "volume": 2, "ranges": [[178]] }]
+    },
+    {
+      "number": 36,
+      "pages": [{ "volume": 2, "ranges": [[177, 193]] }],
+      "inessentialPages": [{ "volume": 2, "ranges": [[207, 208]] }]
+    },
+    {
+      "number": 37,
+      "pages": [{ "volume": 2, "ranges": [[194, 211]] }]
+    },
+    {
+      "number": 38,
+      "pages": [
+        {
+          "volume": 2,
+          "ranges": [
+            [204, 205],
+            [219, 232]
+          ]
+        }
+      ]
+    },
+    {
+      "number": 39,
+      "pages": [{ "volume": 2, "ranges": [[232, 239]] }],
+      "inessentialPages": [{ "volume": 2, "ranges": [[212]] }]
+    }
   ]
 }
